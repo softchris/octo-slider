@@ -63,6 +63,8 @@ const ICONS = {
   star:       { path: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z', stroke: false },
   heart:      { path: 'M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z', stroke: false },
   code:       { path: 'M16 18l6-6-6-6M8 6l-6 6 6 6', stroke: true },
+  play:       { path: 'M5 3l14 9-14 9V3z', stroke: false },
+  terminal:   { path: 'M4 17l6-5-6-5M12 19h8', stroke: true },
 };
 
 function iconEl(id, x, y, size, icon, color) {
@@ -247,6 +249,15 @@ const midnight = [
     el('mn-3c-b3', 'text', 9.4, 3.9, 3.4, 2.5, 'Expand into new markets with localized solutions worldwide.',
       { fontSize: 15, fontFace: MN.font, color: MN.sub, align: 'center', lineSpacing: 1.5 }),
   ])),
+
+  layout('mn-demo', 'Midnight', 'Demo', 'Demo Slide', slide(MN.border, [
+    ovalEl('mn-dm-bg', 4.5, 0.6, 4.0, '#1a2744', MN.accent),
+    iconEl('mn-dm-icon', 5.5, 1.6, 2.0, ICONS.play, MN.accent),
+    el('mn-dm-title', 'text', 1.5, 4.8, 10.0, 1.5, 'DEMO',
+      { fontSize: 80, fontFace: MN.font, color: '#FFFFFF', bold: true, align: 'center' }),
+    el('mn-dm-sub', 'text', 2.5, 6.1, 8.0, 0.8, 'Building something extraordinary — live',
+      { fontSize: 24, fontFace: MN.font, color: MN.sub, align: 'center' }),
+  ])),
 ];
 
 
@@ -419,6 +430,15 @@ const aurora = [
       { fontSize: 22, fontFace: AU.font, color: AU.text, bold: true, align: 'center' }),
     el('au-3c-b3', 'text', 9.4, 3.9, 3.4, 2.5, 'Grow confidently with infrastructure that scales with demand.',
       { fontSize: 15, fontFace: AU.font, color: AU.sub, align: 'center', lineSpacing: 1.5 }),
+  ])),
+
+  layout('au-demo', 'Aurora', 'Demo', 'Demo Slide', slide('#1b1545', [
+    ovalEl('au-dm-bg', 4.5, 0.6, 4.0, '#2a2160', AU.accent),
+    iconEl('au-dm-icon', 5.5, 1.6, 2.0, ICONS.play, AU.accent),
+    el('au-dm-title', 'text', 1.5, 4.8, 10.0, 1.5, 'DEMO',
+      { fontSize: 80, fontFace: AU.font, color: '#FFFFFF', bold: true, align: 'center' }),
+    el('au-dm-sub', 'text', 2.5, 6.1, 8.0, 0.8, 'Watch the magic happen in real time',
+      { fontSize: 24, fontFace: AU.font, color: AU.sub, align: 'center' }),
   ])),
 ];
 
@@ -602,6 +622,15 @@ const clean = [
       { fontSize: 22, fontFace: CL.font, color: CL.text, bold: true, align: 'center' }),
     el('cl-3c-b3', 'text', 9.4, 4.0, 3.4, 2.5, 'Achieve measurable results and track your progress over time.',
       { fontSize: 15, fontFace: CL.font, color: CL.sub, align: 'center', lineSpacing: 1.5 }),
+  ])),
+
+  layout('cl-demo', 'Clean', 'Demo', 'Demo Slide', slide(CL.accent, [
+    ovalEl('cl-dm-bg', 4.5, 0.6, 4.0, '#1e4fc2', 'transparent'),
+    iconEl('cl-dm-icon', 5.5, 1.6, 2.0, ICONS.play, '#FFFFFF'),
+    el('cl-dm-title', 'text', 1.5, 4.8, 10.0, 1.5, 'DEMO',
+      { fontSize: 80, fontFace: CL.font, color: '#FFFFFF', bold: true, align: 'center' }),
+    el('cl-dm-sub', 'text', 2.5, 6.1, 8.0, 0.8, 'Live demonstration',
+      { fontSize: 24, fontFace: CL.font, color: '#c7d2fe', align: 'center' }),
   ])),
 ];
 
@@ -789,6 +818,15 @@ const gopher = [
     el('go-3c-b3', 'text', 9.4, 4.0, 3.4, 2.5, 'Dependency management with reproducible builds and semantic versioning.',
       { fontSize: 15, fontFace: GO.font, color: GO.sub, align: 'center', lineSpacing: 1.5 }),
   ])),
+
+  layout('go-demo', 'Gopher', 'Demo', 'Demo Slide', slide(GO.accent, [
+    ovalEl('go-dm-bg', 4.5, 0.6, 4.0, '#0090B5', 'transparent'),
+    iconEl('go-dm-icon', 5.5, 1.6, 2.0, ICONS.terminal, '#FFFFFF'),
+    el('go-dm-title', 'text', 1.5, 4.8, 10.0, 1.5, 'DEMO',
+      { fontSize: 80, fontFace: 'Consolas', color: '#FFFFFF', bold: true, align: 'center' }),
+    el('go-dm-sub', 'text', 2.5, 6.1, 8.0, 0.8, 'Live Go coding session',
+      { fontSize: 24, fontFace: GO.font, color: '#b3e6f4', align: 'center' }),
+  ])),
 ];
 
 
@@ -975,6 +1013,15 @@ const rustacean = [
     el('rs-3c-b3', 'text', 9.4, 4.0, 3.4, 2.5, 'Over 140K crates available — add dependencies with a single line in Cargo.toml.',
       { fontSize: 15, fontFace: RS.font, color: RS.sub, align: 'center', lineSpacing: 1.5 }),
   ])),
+
+  layout('rs-demo', 'Rustacean', 'Demo', 'Demo Slide', slide('#0f0c24', [
+    ovalEl('rs-dm-bg', 4.5, 0.6, 4.0, '#2a1a0a', RS.accent),
+    iconEl('rs-dm-icon', 5.5, 1.6, 2.0, ICONS.terminal, RS.accent),
+    el('rs-dm-title', 'text', 1.5, 4.8, 10.0, 1.5, 'DEMO',
+      { fontSize: 80, fontFace: 'Consolas', color: '#FFFFFF', bold: true, align: 'center' }),
+    el('rs-dm-sub', 'text', 2.5, 6.1, 8.0, 0.8, 'Zero-cost abstractions in action',
+      { fontSize: 24, fontFace: RS.font, color: RS.sub, align: 'center' }),
+  ])),
 ];
 
 
@@ -1153,6 +1200,15 @@ const javascript = [
       { fontSize: 22, fontFace: JSC.font, color: JSC.text, bold: true, align: 'center' }),
     el('js-3c-b3', 'text', 9.4, 4.0, 3.4, 2.5, 'Vitest, Jest, or Playwright for unit, integration, and end-to-end testing.',
       { fontSize: 15, fontFace: JSC.font, color: JSC.sub, align: 'center', lineSpacing: 1.5 }),
+  ])),
+
+  layout('js-demo', 'JavaScript', 'Demo', 'Demo Slide', slide('#1a1a1a', [
+    ovalEl('js-dm-bg', 4.5, 0.6, 4.0, '#2a2a00', JSC.accent),
+    iconEl('js-dm-icon', 5.5, 1.6, 2.0, ICONS.play, JSC.accent),
+    el('js-dm-title', 'text', 1.5, 4.8, 10.0, 1.5, 'DEMO',
+      { fontSize: 80, fontFace: JSC.font, color: JSC.accent, bold: true, align: 'center' }),
+    el('js-dm-sub', 'text', 2.5, 6.1, 8.0, 0.8, 'From console.log to production — live',
+      { fontSize: 24, fontFace: JSC.font, color: JSC.sub, align: 'center' }),
   ])),
 ];
 
@@ -1333,6 +1389,15 @@ const dotnet = [
     el('dn-3c-b3', 'text', 9.4, 4.0, 3.4, 2.5, 'MAUI, WPF, and WinUI for cross-platform native apps from a single codebase.',
       { fontSize: 15, fontFace: DN.font, color: DN.sub, align: 'center', lineSpacing: 1.5 }),
   ])),
+
+  layout('dn-demo', '.NET', 'Demo', 'Demo Slide', slide('#120730', [
+    ovalEl('dn-dm-bg', 4.5, 0.6, 4.0, '#3D1F8A', DN.accent),
+    iconEl('dn-dm-icon', 5.5, 1.6, 2.0, ICONS.play, '#a78bfa'),
+    el('dn-dm-title', 'text', 1.5, 4.8, 10.0, 1.5, 'DEMO',
+      { fontSize: 80, fontFace: DN.font, color: '#FFFFFF', bold: true, align: 'center' }),
+    el('dn-dm-sub', 'text', 2.5, 6.1, 8.0, 0.8, 'Building with .NET — live coding',
+      { fontSize: 24, fontFace: DN.font, color: DN.sub, align: 'center' }),
+  ])),
 ];
 
 
@@ -1512,6 +1577,15 @@ const java = [
     el('jv-3c-b3', 'text', 9.4, 4.0, 3.4, 2.5, 'Industry-standard testing with parameterized tests, mocking, and assertions.',
       { fontSize: 15, fontFace: JV.font, color: JV.sub, align: 'center', lineSpacing: 1.5 }),
   ])),
+
+  layout('jv-demo', 'Java', 'Demo', 'Demo Slide', slide(JV.accent, [
+    ovalEl('jv-dm-bg', 4.5, 0.6, 4.0, '#3d6a87', 'transparent'),
+    iconEl('jv-dm-icon', 5.5, 1.6, 2.0, ICONS.play, '#FFFFFF'),
+    el('jv-dm-title', 'text', 1.5, 4.8, 10.0, 1.5, 'DEMO',
+      { fontSize: 80, fontFace: JV.font, color: '#FFFFFF', bold: true, align: 'center' }),
+    el('jv-dm-sub', 'text', 2.5, 6.1, 8.0, 0.8, 'Enterprise Java in action',
+      { fontSize: 24, fontFace: JV.font, color: '#c5dbe8', align: 'center' }),
+  ])),
 ];
 
 
@@ -1690,6 +1764,15 @@ const python = [
       { fontSize: 22, fontFace: PY.font, color: PY.text, bold: true, align: 'center' }),
     el('py-3c-b3', 'text', 9.4, 4.0, 3.4, 2.5, 'PyTorch, TensorFlow, and Hugging Face for deep learning and LLMs.',
       { fontSize: 15, fontFace: PY.font, color: PY.sub, align: 'center', lineSpacing: 1.5 }),
+  ])),
+
+  layout('py-demo', 'Python', 'Demo', 'Demo Slide', slide('#141520', [
+    ovalEl('py-dm-bg', 4.5, 0.6, 4.0, '#1e2740', PY.accent),
+    iconEl('py-dm-icon', 5.5, 1.6, 2.0, ICONS.terminal, PY.accent2),
+    el('py-dm-title', 'text', 1.5, 4.8, 10.0, 1.5, 'DEMO',
+      { fontSize: 80, fontFace: PY.font, color: PY.accent2, bold: true, align: 'center' }),
+    el('py-dm-sub', 'text', 2.5, 6.1, 8.0, 0.8, 'Pythonic solutions — live coding',
+      { fontSize: 24, fontFace: PY.font, color: PY.sub, align: 'center' }),
   ])),
 ];
 

@@ -11,9 +11,9 @@ Create professional presentations with themed templates, export to PowerPoint, a
 
 ## ✨ Features
 
-### 🎨 9 Built-in Themes (108 Templates)
+### 🎨 9 Built-in Themes (117 Templates)
 
-Start a new presentation from scratch or pick a complete theme. Each theme includes 12 slide types: Title, Section, Agenda, Bullets, Code, Compare & Contrast, Quote, Image + Text, Thank You, Table, 2-Column, and 3-Column layouts.
+Start a new presentation from scratch or pick a complete theme. Each theme includes 13 slide types: Title, Section, Agenda, Bullets, Code, Compare & Contrast, Quote, Image + Text, Thank You, Table, 2-Column, 3-Column, and Demo layouts.
 
 | Theme | Style | Target Audience |
 |-------|-------|----------------|
@@ -174,7 +174,7 @@ js/
   slide-renderer.js     ← DOM rendering for slides & thumbnails
   editor.js             ← Selection, drag, resize, text/table editing
   toolbar.js            ← Toolbar controls & property panel
-  built-in-layouts.js   ← 108 template definitions across 9 themes
+  built-in-layouts.js   ← 117 template definitions across 9 themes
   pptx-parser.js        ← PPTX import (reads .pptx files)
   pptx-writer.js        ← PPTX export (generates .pptx files)
   syntax-highlight.js   ← Code block syntax highlighting
