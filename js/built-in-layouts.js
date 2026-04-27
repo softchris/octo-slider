@@ -1515,6 +1515,185 @@ const java = [
 ];
 
 
-const builtInLayouts = [...midnight, ...aurora, ...clean, ...gopher, ...rustacean, ...javascript, ...dotnet, ...java];
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  PYTHON — Blue & yellow, clean and readable                 ║
+// ╚══════════════════════════════════════════════════════════════╝
+const PY = {
+  bg: '#1A1B26', card: '#24283B', border: '#3B4261',
+  accent: '#3776AB', accent2: '#FFD43B', accent3: '#4EC9B0',
+  text: '#E8E8E8', sub: '#A9B1D6', muted: '#565F89',
+  font: 'Segoe UI',
+  code: '#1a1b26', codeBg: '#1a1b26',
+  headerBg: '#3776AB',
+};
+
+const python = [
+  layout('py-title', 'Python', 'Title', 'Title Slide', slide(PY.bg, [
+    el('py-t-bar', 'shape', 0, 0, 13.333, 0.25, '', {},
+      { shape: 'rect', shapeStyle: { fill: PY.accent, borderColor: 'transparent', borderWidth: 0 } }),
+    el('py-t-logo', 'text', 5.0, 0.6, 3.3, 1.0, '🐍',
+      { fontSize: 56, fontFace: PY.font, color: PY.text, align: 'center' }),
+    el('py-t-title', 'text', 1.5, 2.0, 10.3, 1.5, 'Python for Everyone',
+      { fontSize: 48, fontFace: PY.font, color: PY.text, bold: true, align: 'center' }),
+    el('py-t-line', 'line', 4.0, 3.7, 5.3, 0, '', {}, { x1: 0, y1: 0, x2: 5.3, y2: 0, lineStyle: { color: PY.accent2, width: 3 } }),
+    el('py-t-sub', 'text', 2.5, 4.0, 8.3, 0.8, 'Simple is better than complex — click to edit',
+      { fontSize: 22, fontFace: PY.font, color: PY.sub, align: 'center' }),
+    el('py-t-date', 'text', 4.5, 5.5, 4.3, 0.5, 'Your Name  |  Date',
+      { fontSize: 14, fontFace: PY.font, color: PY.muted, align: 'center' }),
+  ])),
+
+  layout('py-section', 'Python', 'Section', 'Section Divider', slide(PY.accent, [
+    el('py-s-num', 'text', 1.0, 1.0, 2.0, 2.0, '01',
+      { fontSize: 80, fontFace: PY.font, color: '#FFFFFF', bold: true, align: 'left' }),
+    el('py-s-title', 'text', 1.0, 3.2, 8.0, 1.2, 'Section Title',
+      { fontSize: 44, fontFace: PY.font, color: '#FFFFFF', bold: true, align: 'left' }),
+    el('py-s-line', 'line', 1.0, 4.6, 3.0, 0, '', {}, { x1: 0, y1: 0, x2: 3.0, y2: 0, lineStyle: { color: PY.accent2, width: 4 } }),
+    el('py-s-desc', 'text', 1.0, 5.0, 6.0, 0.8, 'Brief description of what this section covers',
+      { fontSize: 18, fontFace: PY.font, color: 'rgba(255,255,255,0.8)', align: 'left' }),
+  ])),
+
+  layout('py-agenda', 'Python', 'Agenda', 'Agenda', slide(PY.bg, [
+    el('py-a-title', 'text', 0.8, 0.4, 5.0, 0.9, 'Agenda',
+      { fontSize: 36, fontFace: PY.font, color: PY.text, bold: true, align: 'left' }),
+    el('py-a-bar', 'shape', 0.8, 1.3, 0.15, 5.5, '', {},
+      { shape: 'rect', shapeStyle: { fill: PY.accent2, borderColor: 'transparent', borderWidth: 0 } }),
+    el('py-a-list', 'text', 1.3, 1.5, 10.5, 5.0, 'The Zen of Python\nData Structures & Comprehensions\nDecorators & Context Managers\nAsync Programming\nPackaging & Distribution\nQ & A',
+      { fontSize: 24, fontFace: PY.font, color: PY.text, align: 'left', listType: 'numbered', lineSpacing: 2.0 }),
+  ])),
+
+  layout('py-bullets', 'Python', 'Bullets', 'Bullet Points', slide(PY.bg, [
+    el('py-b-title', 'text', 0.8, 0.4, 11.5, 0.9, 'Why Python?',
+      { fontSize: 36, fontFace: PY.font, color: PY.text, bold: true, align: 'left' }),
+    el('py-b-line', 'line', 0.8, 1.4, 11.5, 0, '', {}, { x1: 0, y1: 0, x2: 11.5, y2: 0, lineStyle: { color: PY.accent2, width: 2 } }),
+    el('py-b-list', 'text', 1.0, 1.8, 10.5, 4.5, 'Readable, expressive syntax — code reads like pseudocode\n#1 language for data science, ML, and AI\nMassive ecosystem — 500K+ packages on PyPI\nBatteries included — rich standard library\nVersatile — web, scripting, automation, science, DevOps',
+      { fontSize: 22, fontFace: PY.font, color: PY.sub, align: 'left', listType: 'bullet', lineSpacing: 1.8 }),
+  ])),
+
+  layout('py-code', 'Python', 'Code', 'Code Showcase', slide(PY.code, [
+    el('py-c-title', 'text', 0.8, 0.3, 8.0, 0.8, '# Code Example',
+      { fontSize: 28, fontFace: 'Consolas', color: PY.accent2, bold: true, align: 'left' }),
+    el('py-c-lang', 'text', 9.5, 0.4, 3.0, 0.5, 'Python',
+      { fontSize: 14, fontFace: PY.font, color: '#8b949e', align: 'right' }),
+    el('py-c-code', 'code', 0.8, 1.2, 11.5, 5.0,
+      'from fastapi import FastAPI\nfrom pydantic import BaseModel\n\napp = FastAPI()\n\nclass User(BaseModel):\n    name: str\n    email: str\n    age: int | None = None\n\nusers: dict[int, User] = {}\n\n@app.get("/users/{user_id}")\nasync def get_user(user_id: int):\n    if user_id not in users:\n        return {"error": "User not found"}\n    return users[user_id]\n\n@app.post("/users/{user_id}")\nasync def create_user(user_id: int, user: User):\n    users[user_id] = user\n    return {"created": user.name}',
+      { fontSize: 16, fontFace: 'Consolas', color: '#d4d4d4', backgroundColor: PY.codeBg }, { language: 'python' }),
+    el('py-c-cap', 'text', 0.8, 6.5, 11.5, 0.5, '↑ REST API with FastAPI and Pydantic',
+      { fontSize: 14, fontFace: PY.font, color: '#484f58', align: 'left' }),
+  ])),
+
+  layout('py-compare', 'Python', 'Compare', 'Compare & Contrast', slide(PY.bg, [
+    el('py-cmp-title', 'text', 0.8, 0.4, 11.5, 0.9, 'Python 2 vs. Python 3',
+      { fontSize: 36, fontFace: PY.font, color: PY.text, bold: true, align: 'center' }),
+    el('py-cmp-div', 'line', 6.666, 1.6, 0, 5.0, '', {}, { x1: 0, y1: 0, x2: 0, y2: 5.0, lineStyle: { color: PY.border, width: 2 } }),
+    el('py-cmp-lh', 'text', 0.8, 1.5, 5.2, 0.7, 'Python 3',
+      { fontSize: 26, fontFace: PY.font, color: PY.accent2, bold: true, align: 'center' }),
+    el('py-cmp-lb', 'text', 0.8, 2.4, 5.2, 4.0, 'Type hints and dataclasses\nf-strings for formatting\nAsync/await built in\nWalrus operator and match/case',
+      { fontSize: 18, fontFace: PY.font, color: PY.sub, align: 'left', listType: 'bullet', lineSpacing: 1.6 }),
+    el('py-cmp-rh', 'text', 7.2, 1.5, 5.2, 0.7, 'Python 2 (EOL)',
+      { fontSize: 26, fontFace: PY.font, color: '#F47174', bold: true, align: 'center' }),
+    el('py-cmp-rb', 'text', 7.2, 2.4, 5.2, 4.0, 'No type hints\nprint as statement, not function\n% and .format() for strings\nEnd of life since Jan 2020',
+      { fontSize: 18, fontFace: PY.font, color: PY.sub, align: 'left', listType: 'bullet', lineSpacing: 1.6 }),
+  ])),
+
+  layout('py-quote', 'Python', 'Quote', 'Quote', slide(PY.bg, [
+    el('py-q-bar', 'shape', 0, 0, 0.4, 7.5, '', {},
+      { shape: 'rect', shapeStyle: { fill: PY.accent2, borderColor: 'transparent', borderWidth: 0 } }),
+    el('py-q-mark', 'text', 1.5, 0.8, 2.0, 2.0, '\u201C',
+      { fontSize: 120, fontFace: 'Georgia', color: PY.accent2, bold: false, align: 'left' }),
+    el('py-q-text', 'text', 2.0, 2.2, 9.0, 2.5, 'Readability counts.',
+      { fontSize: 36, fontFace: 'Georgia', color: PY.text, bold: false, italic: true, align: 'left', lineSpacing: 1.5 }),
+    el('py-q-line', 'line', 2.0, 5.0, 2.5, 0, '', {}, { x1: 0, y1: 0, x2: 2.5, y2: 0, lineStyle: { color: PY.accent2, width: 3 } }),
+    el('py-q-auth', 'text', 2.0, 5.3, 9.0, 0.6, '— The Zen of Python (PEP 20)',
+      { fontSize: 20, fontFace: 'Georgia', color: PY.sub, align: 'left' }),
+  ])),
+
+  layout('py-image', 'Python', 'Image', 'Image + Text', slide(PY.bg, [
+    el('py-i-ph', 'shape', 0.6, 0.6, 5.5, 6.0, '🐍\nDrop image here',
+      { fontSize: 24, fontFace: PY.font, color: PY.sub, align: 'center' },
+      { shape: 'roundedRect', shapeStyle: { fill: PY.card, borderColor: PY.border, borderWidth: 2 } }),
+    el('py-i-title', 'text', 6.8, 0.8, 5.7, 0.9, 'Data Pipeline',
+      { fontSize: 32, fontFace: PY.font, color: PY.text, bold: true, align: 'left' }),
+    el('py-i-line', 'line', 6.8, 1.8, 3.0, 0, '', {}, { x1: 0, y1: 0, x2: 3.0, y2: 0, lineStyle: { color: PY.accent2, width: 3 } }),
+    el('py-i-body', 'text', 6.8, 2.2, 5.7, 4.0, 'Replace the placeholder with your diagram, notebook output, or visualization.\n\nShowcase your data pipeline or ML architecture.',
+      { fontSize: 18, fontFace: PY.font, color: PY.sub, align: 'left', lineSpacing: 1.5 }),
+  ])),
+
+  layout('py-thanks', 'Python', 'Thank You', 'Thank You', slide(PY.bg, [
+    el('py-ty-bar', 'shape', 0, 7.25, 13.333, 0.25, '', {},
+      { shape: 'rect', shapeStyle: { fill: PY.accent2, borderColor: 'transparent', borderWidth: 0 } }),
+    el('py-ty-logo', 'text', 5.4, 0.8, 2.5, 1.5, '🐍',
+      { fontSize: 72, fontFace: PY.font, color: PY.text, align: 'center' }),
+    el('py-ty-title', 'text', 1.5, 2.5, 10.3, 1.5, 'Thank You!',
+      { fontSize: 64, fontFace: PY.font, color: PY.text, bold: true, align: 'center' }),
+    el('py-ty-line', 'line', 5.0, 4.2, 3.3, 0, '', {}, { x1: 0, y1: 0, x2: 3.3, y2: 0, lineStyle: { color: PY.accent2, width: 3 } }),
+    el('py-ty-info', 'text', 2.0, 4.7, 9.3, 1.0, 'your.email@company.com\ngithub.com/yourhandle',
+      { fontSize: 18, fontFace: PY.font, color: PY.sub, align: 'center', lineSpacing: 1.6 }),
+  ])),
+
+  layout('py-table', 'Python', 'Table', 'Data Table', slide(PY.bg, [
+    el('py-tbl-title', 'text', 0.8, 0.4, 11.7, 0.8, 'Popular Python Libraries',
+      { fontSize: 32, fontFace: PY.font, color: PY.text, bold: true, align: 'left' }),
+    el('py-tbl-line', 'line', 0.8, 1.3, 3.0, 0, '', {}, { x1: 0, y1: 0, x2: 3.0, y2: 0, lineStyle: { color: PY.accent2, width: 3 } }),
+    tableEl('py-tbl-data', 0.8, 1.8, 11.7, 4.5,
+      [
+        ['Library', 'Domain', 'Downloads/mo', 'Use Case'],
+        ['pandas', 'Data Analysis', '180M', 'DataFrames & data wrangling'],
+        ['FastAPI', 'Web Framework', '30M', 'Modern async REST APIs'],
+        ['scikit-learn', 'Machine Learning', '45M', 'Classification & regression'],
+        ['pytest', 'Testing', '95M', 'Test framework & fixtures'],
+      ],
+      { borderColor: PY.border, borderWidth: 1, headerBg: PY.accent, headerColor: '#FFFFFF', cellBg: PY.card, cellColor: PY.text, altRowBg: '#1F2335', fontSize: 16, fontFace: PY.font }
+    ),
+  ])),
+
+  layout('py-2col', 'Python', '2 Columns', '2 Column Layout', slide(PY.bg, [
+    el('py-2c-bar', 'shape', 0, 0, 13.333, 0.15, '', {},
+      { shape: 'rect', shapeStyle: { fill: PY.accent2, borderColor: 'transparent', borderWidth: 0 } }),
+    el('py-2c-title', 'text', 0.8, 0.5, 11.7, 0.8, "Python's Superpowers",
+      { fontSize: 32, fontFace: PY.font, color: PY.text, bold: true, align: 'left' }),
+    el('py-2c-line', 'line', 0.8, 1.4, 3.0, 0, '', {}, { x1: 0, y1: 0, x2: 3.0, y2: 0, lineStyle: { color: PY.accent2, width: 3 } }),
+    ovalEl('py-2c-o1', 2.3, 1.9, 1.3, PY.accent, PY.border),
+    iconEl('py-2c-i1', 2.45, 2.05, 1.0, ICONS.lightbulb, '#FFFFFF'),
+    el('py-2c-t1', 'text', 1.0, 3.4, 5.0, 0.7, 'Data Science',
+      { fontSize: 24, fontFace: PY.font, color: PY.text, bold: true, align: 'center' }),
+    el('py-2c-b1', 'text', 1.0, 4.2, 5.0, 2.5, 'pandas, NumPy, and Jupyter make Python the #1 language for data exploration and analysis.',
+      { fontSize: 16, fontFace: PY.font, color: PY.sub, align: 'center', lineSpacing: 1.5 }),
+    ovalEl('py-2c-o2', 9.0, 1.9, 1.3, PY.accent2, PY.border),
+    iconEl('py-2c-i2', 9.15, 2.05, 1.0, ICONS.trending, '#000000'),
+    el('py-2c-t2', 'text', 7.3, 3.4, 5.0, 0.7, 'Machine Learning',
+      { fontSize: 24, fontFace: PY.font, color: PY.text, bold: true, align: 'center' }),
+    el('py-2c-b2', 'text', 7.3, 4.2, 5.0, 2.5, 'TensorFlow, PyTorch, and scikit-learn power the world\'s AI from research to production.',
+      { fontSize: 16, fontFace: PY.font, color: PY.sub, align: 'center', lineSpacing: 1.5 }),
+  ])),
+
+  layout('py-3col', 'Python', '3 Columns', '3 Column Layout', slide(PY.bg, [
+    el('py-3c-bar', 'shape', 0, 0, 13.333, 0.15, '', {},
+      { shape: 'rect', shapeStyle: { fill: PY.accent2, borderColor: 'transparent', borderWidth: 0 } }),
+    el('py-3c-title', 'text', 0.8, 0.5, 11.7, 0.8, 'The Python Ecosystem',
+      { fontSize: 32, fontFace: PY.font, color: PY.text, bold: true, align: 'left' }),
+    el('py-3c-line', 'line', 0.8, 1.4, 3.0, 0, '', {}, { x1: 0, y1: 0, x2: 3.0, y2: 0, lineStyle: { color: PY.accent2, width: 3 } }),
+    ovalEl('py-3c-o1', 1.6, 1.9, 1.2, PY.accent, PY.border),
+    iconEl('py-3c-i1', 1.72, 2.02, 0.96, ICONS.globe, '#FFFFFF'),
+    el('py-3c-t1', 'text', 0.5, 3.3, 3.4, 0.7, 'Web',
+      { fontSize: 22, fontFace: PY.font, color: PY.text, bold: true, align: 'center' }),
+    el('py-3c-b1', 'text', 0.5, 4.0, 3.4, 2.5, 'Django, Flask, and FastAPI for full-stack web apps and REST APIs.',
+      { fontSize: 15, fontFace: PY.font, color: PY.sub, align: 'center', lineSpacing: 1.5 }),
+    ovalEl('py-3c-o2', 6.05, 1.9, 1.2, PY.accent2, PY.border),
+    iconEl('py-3c-i2', 6.17, 2.02, 0.96, ICONS.chart, '#000000'),
+    el('py-3c-t2', 'text', 4.95, 3.3, 3.4, 0.7, 'Data',
+      { fontSize: 22, fontFace: PY.font, color: PY.text, bold: true, align: 'center' }),
+    el('py-3c-b2', 'text', 4.95, 4.0, 3.4, 2.5, 'pandas, Polars, and SQLAlchemy for data wrangling, ETL, and analytics.',
+      { fontSize: 15, fontFace: PY.font, color: PY.sub, align: 'center', lineSpacing: 1.5 }),
+    ovalEl('py-3c-o3', 10.5, 1.9, 1.2, PY.accent3, PY.border),
+    iconEl('py-3c-i3', 10.62, 2.02, 0.96, ICONS.zap, '#FFFFFF'),
+    el('py-3c-t3', 'text', 9.4, 3.3, 3.4, 0.7, 'AI / ML',
+      { fontSize: 22, fontFace: PY.font, color: PY.text, bold: true, align: 'center' }),
+    el('py-3c-b3', 'text', 9.4, 4.0, 3.4, 2.5, 'PyTorch, TensorFlow, and Hugging Face for deep learning and LLMs.',
+      { fontSize: 15, fontFace: PY.font, color: PY.sub, align: 'center', lineSpacing: 1.5 }),
+  ])),
+];
+
+
+const builtInLayouts = [...midnight, ...aurora, ...clean, ...gopher, ...rustacean, ...javascript, ...dotnet, ...java, ...python];
 
 export { builtInLayouts };
