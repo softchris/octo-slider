@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Slide Helper — PPTX Editor</title>
+  <link rel="stylesheet" href="css/styles.css?v=31">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/gitbrent/PptxGenJS@3.12.0/dist/pptxgen.bundle.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-left">
+      <h1>Slide Helper</h1>
+    </div>
+    <div class="header-center">
+      <input type="file" id="file-input" accept=".pptx" hidden>
+      <button id="btn-new" class="header-btn" title="New Presentation">✨ New</button>
+      <button id="btn-open" class="header-btn" title="Open PPTX">📂 Open</button>
+      <button id="btn-save" class="header-btn" title="Save as PPTX" disabled>💾 Save</button>
+      <div class="present-wrapper">
+        <button id="btn-present" class="header-btn" title="Present" disabled>▶ Present</button>
+        <div id="present-menu" class="present-menu" style="display:none">
+          <button id="present-from-start" class="present-menu-item">▶ From Beginning</button>
+          <button id="present-from-current" class="present-menu-item">▶ From Current Slide</button>
+        </div>
+      </div>
+    </div>
+    <div class="header-right">
+      <span id="file-name" class="file-name">No file loaded</span>
+    </div>
+  </header>
+
+  <div class="toolbar" id="toolbar">
+    <div class="toolbar-group">
+      <button id="btn-add-text" class="tool-btn" title="Add Text Box" disabled>📝 Text</button>
+      <div class="shape-dropdown" id="shape-dropdown">
+        <button id="btn-shapes" class="tool-btn" title="Add Shape" disabled>◆ Shapes ▾</button>
+        <div class="shape-dropdown-menu" id="shape-dropdown-menu">
+          <button data-shape="rect" title="Rectangle">▬ Rectangle</button>
+          <button data-shape="roundRect" title="Rounded Rectangle">▢ Rounded</button>
+          <button data-shape="ellipse" title="Ellipse">⚪ Ellipse</button>
+          <button data-shape="diamond" title="Diamond">◆ Diamond</button>
+          <button data-shape="triangle" title="Triangle">▲ Triangle</button>
+          <button data-shape="pentagon" title="Pentagon">⬠ Pentagon</button>
+          <button data-shape="hexagon" title="Hexagon">⬡ Hexagon</button>
+          <button data-shape="star" title="Star">★ Star</button>
+          <button data-shape="arrow-right" title="Arrow Right">➤ Arrow Right</button>
+          <button data-shape="arrow-left" title="Arrow Left">◄ Arrow Left</button>
+          <button data-shape="trapezoid" title="Trapezoid">⏢ Trapezoid</button>
+          <button data-shape="parallelogram" title="Parallelogram">▱ Parallelogram</button>
+          <button data-shape="cross" title="Cross / Plus">✚ Cross</button>
+          <button data-shape="line" title="Line">╱ Line</button>
+          <button data-shape="explanation" title="Explanation callout">💬 Explanation</button>
+        </div>
+      </div>
+      <div class="image-btn-wrapper">
+        <button id="btn-add-image" class="tool-btn" title="Add Image or Icon" disabled>🖼️ Image ▾</button>
+        <div id="image-add-menu" class="present-menu" style="display:none">
+          <button id="btn-image-from-file" class="present-menu-item">📁 Image from File</button>
+          <button id="btn-add-icon" class="present-menu-item">✦ Add Icon</button>
+        </div>
+      </div>
+      <button id="btn-add-code" class="tool-btn" title="Add Code Block" disabled>💻 Code</button>
+      <button id="btn-add-table" class="tool-btn" title="Add Table" disabled>📊 Table</button>
+      <input type="file" id="image-input" accept="image/*" hidden>
+    </div>
+    <div class="toolbar-separator"></div>
+    <div class="toolbar-group">
+      <button id="btn-slide-bg" class="tool-btn" title="Slide Background" disabled>🎨 Background</button>
+    </div>
+    <div class="toolbar-separator"></div>
+    <div class="toolbar-group" id="selection-tools" style="display:none;">
+      <button id="btn-delete-el" class="tool-btn danger-btn" title="Delete selected element">🗑 Delete</button>
+      <button id="btn-duplicate-el" class="tool-btn" title="Duplicate selected element">📋 Duplicate</button>
+    </div>
+  </div>
+
+  <!-- Background Picker Panel -->
+  <div class="bg-picker-overlay" id="bg-picker-overlay" style="display:none;">
+    <div class="bg-picker-panel">
+      <div class="bg-picker-header">
+        <h3>Slide Background</h3>
+        <button class="bg-picker-close" id="bg-picker-close">✕</button>
+      </div>
+      <div class="bg-picker-section" id="bg-recent-section" style="display:none;">
+        <h4>Recent Colors</h4>
+        <div class="bg-swatches" id="bg-recent-swatches"></div>
+      </div>
+      <div class="bg-picker-section">
+        <h4>Solid Colors</h4>
+        <div class="bg-swatches" id="bg-solid-swatches"></div>
+        <div class="bg-custom-row">
+          <label>Custom:</label>
+          <input type="color" id="bg-custom-color" value="#FFFFFF">
+          <button class="tool-btn" id="bg-apply-custom">Apply</button>
+        </div>
+      </div>
+      <div class="bg-picker-section">
+        <h4>Gradients</h4>
+        <div class="bg-swatches" id="bg-gradient-swatches"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-area">
+    <aside class="slide-panel" id="slide-panel">
+      <div class="slide-panel-header">
+        <div class="slide-panel-tabs">
+          <button id="tab-slides" class="slide-tab active" title="Slides">Slides</button>
+          <button id="tab-masters" class="slide-tab" title="Templates">Templates</button>
+
+        </div>
+        <div>
+          <button id="btn-add-slide" class="small-btn" title="Add Slide" disabled>+</button>
+          <button id="btn-delete-slide" class="small-btn" title="Delete Slide" disabled>🗑</button>
+        </div>
+      </div>
+      <div class="slide-thumbnails" id="slide-thumbnails" tabindex="0"></div>
+    </aside>
+
+    <main class="editor-area" id="editor-area">
+      <div class="editor-canvas-area" id="editor-canvas-area">
+        <div class="canvas-sizer" id="canvas-sizer">
+          <div class="canvas-container" id="canvas-container">
+            <div class="slide-canvas" id="slide-canvas">
+              <div class="canvas-placeholder">Open a .pptx file to get started</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="notes-resize-handle" id="notes-resize-handle" title="Drag to resize notes"></div>
+      <div class="notes-panel" id="notes-panel">
+        <div class="notes-header">
+          <span class="notes-title">Speaker Notes</span>
+        </div>
+        <textarea id="notes-textarea" class="notes-textarea" placeholder="Click here to add speaker notes..."></textarea>
+      </div>
+    </main>
+
+    <aside class="props-panel" id="props-panel">
+      <div class="props-panel-header">Properties</div>
+      <div class="props-empty" id="props-empty">Select an element to edit its properties</div>
+
+      <div class="props-section" id="text-format-tools" style="display:none;">
+        <div class="props-section-title">Text</div>
+        <div class="props-section-body">
+          <div class="props-field">
+            <label>Font Family</label>
+            <select id="sel-font-family" title="Font Family">
+              <option value="Arial">Arial</option>
+              <option value="Calibri">Calibri</option>
+              <option value="Cambria">Cambria</option>
+              <option value="Consolas">Consolas</option>
+              <option value="Courier New">Courier New</option>
+              <option value="Georgia">Georgia</option>
+              <option value="Helvetica">Helvetica</option>
+              <option value="Impact">Impact</option>
+              <option value="Segoe UI">Segoe UI</option>
+              <option value="Tahoma">Tahoma</option>
+              <option value="Times New Roman">Times New Roman</option>
+              <option value="Trebuchet MS">Trebuchet MS</option>
+              <option value="Verdana">Verdana</option>
+            </select>
+          </div>
+          <div class="props-field">
+            <label>Font Size</label>
+            <select id="sel-font-size" title="Font Size">
+              <option value="10">10</option>
+              <option value="12">12</option>
+              <option value="14">14</option>
+              <option value="16">16</option>
+              <option value="18">18</option>
+              <option value="20">20</option>
+              <option value="24" selected>24</option>
+              <option value="28">28</option>
+              <option value="32">32</option>
+              <option value="36">36</option>
+              <option value="48">48</option>
+              <option value="64">64</option>
+              <option value="72">72</option>
+              <option value="96">96</option>
+            </select>
+          </div>
+          <div class="props-field">
+            <label>Style</label>
+            <div class="props-btn-group">
+              <button id="btn-bold" class="props-btn" title="Bold"><strong>B</strong></button>
+              <button id="btn-italic" class="props-btn" title="Italic"><em>I</em></button>
+            </div>
+          </div>
+          <div class="props-field">
+            <label>Font Color</label>
+            <input type="color" id="color-font" value="#333333" title="Font Color">
+            <div class="recent-swatches" id="recent-font-colors"></div>
+          </div>
+          <div class="props-field">
+            <label>Background Color</label>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <input type="color" id="color-text-bg" value="#ffffff" title="Text Background Color">
+              <button id="btn-text-bg-clear" class="props-btn" title="Clear Background" style="font-size:11px; padding:2px 6px;">✕</button>
+            </div>
+            <div class="recent-swatches" id="recent-text-bg-colors"></div>
+          </div>
+          <div class="props-field">
+            <label>Text Alignment</label>
+            <select id="sel-align" title="Text Alignment">
+              <option value="left">⬅ Left</option>
+              <option value="center">↔ Center</option>
+              <option value="right">➡ Right</option>
+            </select>
+          </div>
+          <div class="props-field">
+            <label>List Type</label>
+            <select id="sel-list-type" title="List Type">
+              <option value="none">None</option>
+              <option value="bullet">• Bullet List</option>
+              <option value="numbered">1. Numbered List</option>
+            </select>
+          </div>
+          <div class="props-field">
+            <label>Line Spacing</label>
+            <select id="sel-line-spacing" title="Line Spacing">
+              <option value="1.0">1.0</option>
+              <option value="1.2">1.2</option>
+              <option value="1.5">1.5</option>
+              <option value="1.8">1.8</option>
+              <option value="2.0">2.0</option>
+              <option value="2.5">2.5</option>
+              <option value="3.0">3.0</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="props-section" id="code-format-tools" style="display:none;">
+        <div class="props-section-title">Code</div>
+        <div class="props-section-body">
+          <div class="props-field">
+            <label>Language</label>
+            <select id="sel-code-language" title="Language">
+              <option value="javascript">JavaScript</option>
+              <option value="python">Python</option>
+              <option value="csharp">C#</option>
+              <option value="java">Java</option>
+              <option value="go">Go</option>
+              <option value="rust">Rust</option>
+            </select>
+          </div>
+          <div class="props-field">
+            <label>Font Size</label>
+            <select id="sel-code-font-size" title="Font Size">
+              <option value="10">10</option>
+              <option value="12">12</option>
+              <option value="14">14</option>
+              <option value="16" selected>16</option>
+              <option value="18">18</option>
+              <option value="20">20</option>
+              <option value="24">24</option>
+            </select>
+          </div>
+          <div class="props-field">
+            <label>Text Color</label>
+            <input type="color" id="color-code-text" value="#d4d4d4" title="Code Text Color">
+          </div>
+          <div class="props-field">
+            <label>Background</label>
+            <input type="color" id="color-code-bg" value="#1e1e1e" title="Code Background">
+          </div>
+        </div>
+      </div>
+
+      <div class="props-section" id="shape-format-tools" style="display:none;">
+        <div class="props-section-title">Shape</div>
+        <div class="props-section-body">
+          <div class="props-field">
+            <label>Fill Color</label>
+            <input type="color" id="color-fill" value="#4472C4" title="Fill Color">
+            <div class="recent-swatches" id="recent-fill-colors"></div>
+          </div>
+          <div class="props-field">
+            <label>Border Color</label>
+            <div class="props-color-row">
+              <input type="color" id="color-border" value="#2F5496" title="Border Color">
+              <select id="sel-border-width" title="Border Width">
+                <option value="0">None</option>
+                <option value="1" selected>1px</option>
+                <option value="2">2px</option>
+                <option value="3">3px</option>
+                <option value="4">4px</option>
+              </select>
+            </div>
+            <div class="recent-swatches" id="recent-border-colors"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="props-section" id="line-format-tools" style="display:none;">
+        <div class="props-section-title">Line</div>
+        <div class="props-section-body">
+          <div class="props-field">
+            <label>Color</label>
+            <input type="color" id="color-line" value="#333333" title="Line Color">
+          </div>
+          <div class="props-field">
+            <label>Width</label>
+            <select id="sel-line-width" title="Line Width">
+              <option value="1">1px</option>
+              <option value="2">2px</option>
+              <option value="3" selected>3px</option>
+              <option value="4">4px</option>
+              <option value="5">5px</option>
+              <option value="6">6px</option>
+              <option value="8">8px</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="props-section" id="image-format-tools" style="display:none;">
+        <div class="props-section-title">Image</div>
+        <div class="props-section-body">
+          <div class="props-field">
+            <label>Crop to Shape</label>
+            <select id="sel-crop-shape" title="Crop to Shape">
+              <option value="none">None (Rectangle)</option>
+              <option value="ellipse">⬭ Oval</option>
+              <option value="roundRect">▢ Rounded Rectangle</option>
+              <option value="diamond">◇ Diamond</option>
+              <option value="triangle">△ Triangle</option>
+              <option value="pentagon">⬠ Pentagon</option>
+              <option value="hexagon">⬡ Hexagon</option>
+              <option value="star">★ Star</option>
+              <option value="cross">✚ Cross</option>
+              <option value="arrow-right">▷ Arrow Right</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="props-section" id="table-format-tools" style="display:none;">
+        <div class="props-section-title">Table</div>
+        <div class="props-section-body">
+          <div class="props-field">
+            <label>Rows</label>
+            <input type="number" id="sel-table-rows" min="1" max="20" value="3" title="Number of rows">
+          </div>
+          <div class="props-field">
+            <label>Columns</label>
+            <input type="number" id="sel-table-cols" min="1" max="10" value="3" title="Number of columns">
+          </div>
+          <div class="props-field">
+            <label>Header Row</label>
+            <select id="sel-table-header">
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div class="props-field">
+            <label>Header BG</label>
+            <input type="color" id="color-table-header-bg" value="#4472C4" title="Header background">
+          </div>
+          <div class="props-field">
+            <label>Header Text</label>
+            <input type="color" id="color-table-header-text" value="#FFFFFF" title="Header text color">
+          </div>
+          <div class="props-field">
+            <label>Cell BG</label>
+            <input type="color" id="color-table-cell-bg" value="#FFFFFF" title="Cell background">
+          </div>
+          <div class="props-field">
+            <label>Alt Row BG</label>
+            <input type="color" id="color-table-alt-bg" value="#f0f4ff" title="Alternating row background">
+          </div>
+          <div class="props-field">
+            <label>Cell Text</label>
+            <input type="color" id="color-table-cell-text" value="#333333" title="Cell text color">
+          </div>
+          <div class="props-field">
+            <label>Border</label>
+            <input type="color" id="color-table-border" value="#dee2e6" title="Border color">
+          </div>
+          <div class="props-field">
+            <label>Font Size</label>
+            <select id="sel-table-font-size" title="Table font size">
+              <option value="10">10</option>
+              <option value="12">12</option>
+              <option value="14">14</option>
+              <option value="16">16</option>
+              <option value="18">18</option>
+              <option value="20">20</option>
+              <option value="24">24</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="props-section" id="shadow-tools" style="display:none;">
+        <div class="props-section-title">Shadow</div>
+        <div class="props-section-body">
+          <div class="props-field">
+            <label>Shadow Type</label>
+            <div class="custom-dropdown" id="shadow-type-dropdown">
+              <div class="custom-dropdown-selected" id="shadow-type-selected">None</div>
+              <div class="custom-dropdown-menu" id="shadow-type-menu">
+                <div class="custom-dropdown-item" data-value="none">None</div>
+                <div class="custom-dropdown-group">Directional</div>
+                <div class="custom-dropdown-item" data-value="drop-bottom-right">↘ Bottom-Right</div>
+                <div class="custom-dropdown-item" data-value="drop-bottom-left">↙ Bottom-Left</div>
+                <div class="custom-dropdown-item" data-value="drop-top-right">↗ Top-Right</div>
+                <div class="custom-dropdown-item" data-value="drop-top-left">↖ Top-Left</div>
+                <div class="custom-dropdown-item" data-value="drop-right">→ Right</div>
+                <div class="custom-dropdown-item" data-value="drop-left">← Left</div>
+                <div class="custom-dropdown-item" data-value="drop-below">↓ Below</div>
+                <div class="custom-dropdown-item" data-value="drop-above">↑ Above</div>
+                <div class="custom-dropdown-group">Styles</div>
+                <div class="custom-dropdown-item" data-value="soft-glow">✦ Soft Glow</div>
+                <div class="custom-dropdown-item" data-value="hard-edge">▬ Hard Edge</div>
+                <div class="custom-dropdown-item" data-value="inner">▣ Inner Shadow</div>
+                <div class="custom-dropdown-item" data-value="deep">▼ Deep</div>
+                <div class="custom-dropdown-item" data-value="distant">◫ Distant</div>
+                <div class="custom-dropdown-item" data-value="close">◻ Close &amp; Tight</div>
+                <div class="custom-dropdown-item" data-value="wide-spread">◈ Wide Spread</div>
+                <div class="custom-dropdown-item" data-value="distorted">◇ Distorted</div>
+              </div>
+            </div>
+          </div>
+          <div class="props-field">
+            <label>Shadow Color</label>
+            <input type="color" id="color-shadow" value="#000000" title="Shadow Color">
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Presenter Mode Overlay -->
+  <div id="presenter-overlay" style="display:none;">
+    <div id="presenter-slide-container">
+      <div id="presenter-slide"></div>
+    </div>
+    <div id="presenter-status">
+      <span id="presenter-slide-num"></span>
+    </div>
+  </div>
+
+  <!-- Icon Picker Dialog -->
+  <!-- Table config dialog -->
+  <div id="table-config-overlay" class="icon-picker-overlay" style="display:none;">
+    <div class="table-config-dialog">
+      <div class="icon-picker-header">
+        <h3>Insert Table</h3>
+        <button id="table-config-close" class="icon-picker-close">&times;</button>
+      </div>
+      <div class="table-config-body">
+        <div class="table-config-row">
+          <label for="table-rows">Rows</label>
+          <input type="number" id="table-rows" min="2" max="10" value="4">
+        </div>
+        <div class="table-config-row">
+          <label for="table-cols">Columns</label>
+          <input type="number" id="table-cols" min="2" max="8" value="3">
+        </div>
+        <div class="table-config-preview" id="table-config-preview"></div>
+        <button id="table-config-insert" class="table-config-insert">Insert Table</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="icon-picker-overlay" class="icon-picker-overlay" style="display:none;">
+    <div class="icon-picker-dialog">
+      <div class="icon-picker-header">
+        <h3>Choose an Icon</h3>
+        <button id="icon-picker-close" class="icon-picker-close">&times;</button>
+      </div>
+      <div class="icon-picker-search">
+        <input type="text" id="icon-search" placeholder="Search icons..." autocomplete="off">
+      </div>
+      <div class="icon-picker-color">
+        <label>Color:</label>
+        <input type="color" id="icon-color" value="#333333">
+      </div>
+      <div id="icon-grid" class="icon-grid"></div>
+    </div>
+  </div>
+
+  <!-- New Presentation Dialog -->
+  <div id="new-pres-overlay" class="icon-picker-overlay" style="display:none;">
+    <div class="new-pres-dialog">
+      <div class="icon-picker-header">
+        <h3>New Presentation</h3>
+        <button id="new-pres-close" class="icon-picker-close">&times;</button>
+      </div>
+      <div class="new-pres-body">
+        <div class="new-pres-options">
+          <button id="new-pres-blank" class="new-pres-option-btn">
+            <span class="new-pres-option-icon">📄</span>
+            <span class="new-pres-option-label">Blank Presentation</span>
+            <span class="new-pres-option-desc">Start with a single empty slide</span>
+          </button>
+          <div class="new-pres-divider"></div>
+          <div class="new-pres-template-section">
+            <label class="new-pres-theme-label">From Template Theme</label>
+            <select id="new-pres-theme-select" class="new-pres-theme-select">
+              <option value="">— Select a theme —</option>
+            </select>
+          </div>
+        </div>
+        <div id="new-pres-preview" class="new-pres-preview" style="display:none;">
+          <div class="new-pres-preview-grid" id="new-pres-preview-grid"></div>
+          <button id="new-pres-create" class="new-pres-create-btn">Create Deck</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js?v=51"></script>
+</body>
+</html>
