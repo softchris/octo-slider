@@ -11,7 +11,7 @@ Create professional presentations with themed templates, export to PowerPoint, a
 
 ## ✨ Features
 
-### 🎨 8 Built-in Themes (96 Templates)
+### 🎨 9 Built-in Themes (108 Templates)
 
 Start a new presentation from scratch or pick a complete theme. Each theme includes 12 slide types: Title, Section, Agenda, Bullets, Code, Compare & Contrast, Quote, Image + Text, Thank You, Table, 2-Column, and 3-Column layouts.
 
@@ -25,6 +25,7 @@ Start a new presentation from scratch or pick a complete theme. Each theme inclu
 | **JavaScript** | Yellow & dark editor style | JS/TS developers |
 | **.NET** | Purple & blue | C# / .NET developers |
 | **Java** ☕ | Blue & orange on light gray | Java developers |
+| **Python** 🐍 | Blue & yellow on Tokyo Night dark | Python / Data / ML developers |
 
 ![Theme Preview](screenshots/03-theme-preview.png)
 
@@ -173,7 +174,7 @@ js/
   slide-renderer.js     ← DOM rendering for slides & thumbnails
   editor.js             ← Selection, drag, resize, text/table editing
   toolbar.js            ← Toolbar controls & property panel
-  built-in-layouts.js   ← 96 template definitions across 8 themes
+  built-in-layouts.js   ← 108 template definitions across 9 themes
   pptx-parser.js        ← PPTX import (reads .pptx files)
   pptx-writer.js        ← PPTX export (generates .pptx files)
   syntax-highlight.js   ← Code block syntax highlighting
@@ -198,6 +199,10 @@ js/
 
 ### Java
 ![Java Preview](screenshots/11-java-preview.png)
+
+### Python
+![Python Title](screenshots/18-python-title.png)
+![Python Code](screenshots/19-python-code.png)
 
 ---
 
